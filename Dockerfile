@@ -27,6 +27,11 @@ RUN apt-get install -y --no-install-recommends \
     ca-certificates \
     libsqlite3-dev \
     pkg-config 
+
+RUN apt-get update
+RUN apt-get install -y --fix-missing curl autoconf libtool
+RUN curl -L https://github.com/libspatialindex/libspatialindex/archive/1.8.5.tar.gz | tar -xz
+RUN cd libspatialindex-1.8.5 && ./autogen.sh && ./configure && make && make install && ldconfig
         
 RUN apt-get clean
 
@@ -71,8 +76,8 @@ RUN pip3 install \
     opencv-python \
     tqdm \
     beautifulsoup4 \
-    Pillow
-
+    Pillow \
+    jupyterthemes
 
 # Install Utilities & Tests
 RUN pip3 install --upgrade \
