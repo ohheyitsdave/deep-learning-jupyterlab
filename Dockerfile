@@ -26,7 +26,11 @@ RUN apt-get install -y --no-install-recommends \
     openssl \
     ca-certificates \
     libsqlite3-dev \
-    pkg-config 
+    pkg-config \
+    libsm6 \
+    libxext6 \
+    libxrender1 \ 
+    libfontconfig1
 
 RUN apt-get update
 RUN apt-get install -y --fix-missing curl autoconf libtool
@@ -60,6 +64,7 @@ RUN pip3 install \
     pandas \
     scipy \
     scikit-learn \
+    scikit-optimize\
     matplotlib \
     bokeh \
     seaborn \
@@ -77,7 +82,9 @@ RUN pip3 install \
     tqdm \
     beautifulsoup4 \
     Pillow \
-    jupyterthemes
+    jupyterthemes \
+    tqdm \ 
+    autokeras
 
 # Install Utilities & Tests
 RUN pip3 install --upgrade \
