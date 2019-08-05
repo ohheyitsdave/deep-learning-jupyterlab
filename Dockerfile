@@ -118,6 +118,9 @@ RUN mkdir -p ~/.jupyter && echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyte
 
 RUN jupyter serverextension enable --py jupyterlab
 RUN jupyter nbextension enable --py widgetsnbextension
+RUN pip install jupyter_contrib_nbextensions && jupyter contrib nbextension install 
+
+
 
 # Open Ports
 # TensorBoard
