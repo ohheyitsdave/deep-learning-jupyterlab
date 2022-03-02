@@ -1,8 +1,8 @@
 # Jupyterlab
 
-Release 2020.03 contains the following packages:
+Release 2022.03 contains the following packages:
 
-- Python 3.75
+- Python 3.10
 - Jupyterlab
 - Numpy
 - Pandas
