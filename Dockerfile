@@ -2,7 +2,7 @@
 # Dockerfile to build Deep Learning Toolkit container images
 ############################################################
 
-FROM ubuntu:19.10
+FROM ubuntu:20.04
 MAINTAINER David Lackovic david.lackovic@me.com
 
 ENV DEBIAN_FRONTEND noninteractivenoninteractive
@@ -39,8 +39,8 @@ RUN cd libspatialindex-1.8.5 && ./autogen.sh && ./configure && make && make inst
         
 RUN apt-get clean
 
-# Make Python 3.6 the default python
-# RUN ln -s /usr/bin/python3.6 /usr/bin/python
+# Make Python 3.10 the default python
+# RUN ln -s /usr/bin/python3.10 /usr/bin/python
 
 # Get pip
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
@@ -93,7 +93,7 @@ RUN pip3 install --upgrade \
     pytest 
 
 
-# Deep Learnig Libraries
+# Deep Learning Libraries
 # Install TensorFlow
 RUN pip3 install tensorflow
 # RUN pip install --ignore-installed --upgrade tensorflow-gpu
@@ -103,7 +103,7 @@ RUN pip3 install keras
 RUN pip install --upgrade keras
 
 # Install Pytorch
-RUN pip install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip3 install torch==1.10.2+cpu torchvision==0.11.3+cpu torchaudio==0.10.2+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
 ##################### INSTALLATION END #####################
 ###################### CONFIGURATION ######################
