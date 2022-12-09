@@ -2,7 +2,7 @@
 # Dockerfile to build Deep Learning Toolkit container images
 ############################################################
 
-FROM ubuntu:20.04
+FROM ubuntu:22.10
 MAINTAINER David Lackovic david.lackovic@me.com
 
 ENV DEBIAN_FRONTEND noninteractivenoninteractive
@@ -29,7 +29,7 @@ RUN apt-get install -y --no-install-recommends \
     pkg-config \
     libsm6 \
     libxext6 \
-    libxrender1 \ 
+    libxrender1 \
     libfontconfig1
 
 RUN apt-get update
@@ -39,8 +39,11 @@ RUN cd libspatialindex-1.8.5 && ./autogen.sh && ./configure && make && make inst
         
 RUN apt-get clean
 
-# Make Python 3.10 the default python
-# RUN ln -s /usr/bin/python3.10 /usr/bin/python
+# Make Python 3.11 the default python
+# RUN ln -s /usr/bin/python3.11 /usr/bin/python
+RUN apt-get install python3.10
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
+RUN update-alternatives --config python3
 
 # Get pip
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
@@ -55,6 +58,9 @@ RUN pip3 install --upgrade \
     jupyter \
     jupyterlab \
     jupyter_contrib_nbextensions \
+    jupyterlab_widgets \
+    "ipywidgets>=7,<8" \
+    jupyterlab-git \
     ipywidgets \
     ipykernel 
 
@@ -83,7 +89,7 @@ RUN pip3 install \
     beautifulsoup4 \
     Pillow \
     jupyterthemes \
-    tqdm \ 
+    tqdm \
     autokeras
 
 # Install Utilities & Tests
@@ -92,18 +98,14 @@ RUN pip3 install --upgrade \
     autopep8 \
     pytest 
 
-
 # Deep Learning Libraries
 # Install TensorFlow
 RUN pip3 install tensorflow
 # RUN pip install --ignore-installed --upgrade tensorflow-gpu
 
-# Install Keras
-RUN pip3 install keras
-RUN pip install --upgrade keras
 
 # Install Pytorch
-RUN pip3 install torch==1.10.2+cpu torchvision==0.11.3+cpu torchaudio==0.10.2+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
+RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
 ##################### INSTALLATION END #####################
 ###################### CONFIGURATION ######################
@@ -117,9 +119,7 @@ RUN mkdir -p ~/.jupyter && echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyte
 
 RUN jupyter serverextension enable --py jupyterlab
 RUN jupyter nbextension enable --py widgetsnbextension
-RUN pip install jupyter_contrib_nbextensions && jupyter contrib nbextension install 
-
-
+RUN pip install jupyter_contrib_nbextensions && jupyter contrib nbextension install
 
 # Open Ports
 # TensorBoard
