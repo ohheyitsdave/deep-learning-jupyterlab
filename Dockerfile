@@ -41,9 +41,10 @@ RUN apt-get clean
 
 # Make Python 3.11 the default python
 # RUN ln -s /usr/bin/python3.11 /usr/bin/python
-RUN apt-get install python3.10
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
-RUN update-alternatives --config python3
+# RUN add-apt-repository ppa:deadsnakes/ppa
+# RUN apt-get install python3.11
+# RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11
+# RUN update-alternatives --config python3
 
 # Get pip
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
@@ -55,14 +56,15 @@ RUN pip3 install --upgrade pip
 # Install Jupyter Ecosystem
 RUN pip3 install --upgrade \
     pip \
-    jupyter \
     jupyterlab \
-    jupyter_contrib_nbextensions \
     jupyterlab_widgets \
-    "ipywidgets>=7,<8" \
     jupyterlab-git \
-    ipywidgets \
-    ipykernel 
+    jupyterlab-code-formatter \
+    ipydatagrid \
+    jupyterlab_materialdarker \
+    jupyterlab-notifications \
+    jupyterlab_legos_ui \
+    jupyterlab_darkside_ui
 
 # Install scientific stack
 RUN pip3 install \
@@ -79,7 +81,7 @@ RUN pip3 install \
     xlrd \
     xlwt \
     xlsxwriter \
-    openpyxl \  
+    openpyxl \
     html5lib \
     pymongo \
     SQLAlchemy \
@@ -96,7 +98,7 @@ RUN pip3 install \
 RUN pip3 install --upgrade \
     flake8 \
     autopep8 \
-    pytest 
+    pytest
 
 # Deep Learning Libraries
 # Install TensorFlow
